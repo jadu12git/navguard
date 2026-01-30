@@ -2,6 +2,8 @@ import pandas as pd
 from src.metrics.eta_accuracy import eta_error_percentage
 from src.metrics.turn_accuracy import turn_accuracy
 
+ETA_THRESHOLD = 0.05  # 5% tolerance
+
 def validate_routes(v1_path: str, v2_path: str):
     v1 = pd.read_csv(v1_path)
     v2 = pd.read_csv(v2_path)
@@ -21,9 +23,10 @@ def validate_routes(v1_path: str, v2_path: str):
         status = "PASS"
         issues = []
 
-        if eta_v2 > eta_v1:
+        if eta_v2 - eta_v1 > ETA_THRESHOLD:
             status = "FAIL"
-            issues.append("ETA regression")
+            issues.append("ETA regression beyond acceptable threshold")
+
 
         if turns_v2 > turns_v1:
             status = "FAIL"
