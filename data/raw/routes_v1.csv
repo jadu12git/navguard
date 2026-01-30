@@ -1,0 +1,4 @@
+route_id,version,distance_km,eta_seconds,actual_time_seconds,wrong_turns
+101,v1,12.4,900,980,2
+102,v1,8.1,600,620,1
+103,v1,15.0,1100,1200,3
