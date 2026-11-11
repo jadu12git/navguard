@@ -17,3 +17,11 @@ def test_eta_accuracy_rejects_negative_baseline():
 
     with pytest.raises(ValueError, match="eta_seconds must be positive"):
         eta_error_percentage(-100, 110)
+
+
+def test_eta_accuracy_rejects_nonfinite_baselines():
+    import pytest
+
+    for eta in (float("nan"), float("inf"), float("-inf")):
+        with pytest.raises(ValueError, match="eta_seconds must be positive"):
+            eta_error_percentage(eta, 110)
