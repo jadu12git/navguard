@@ -1,4 +1,5 @@
 from src.metrics.eta_accuracy import eta_error_percentage
+from src.metrics.turn_accuracy import turn_accuracy
 
 def test_eta_accuracy():
     error = eta_error_percentage(100, 110)
@@ -38,3 +39,15 @@ def test_eta_accuracy_rejects_invalid_actual_durations():
 def test_eta_accuracy_accepts_zero_actual_duration():
     # A zero actual time is mathematically valid, unlike a zero ETA baseline.
     assert eta_error_percentage(100, 0) == 1.0
+
+
+def test_turn_accuracy_rejects_negative_counts():
+    import pytest
+
+    with pytest.raises(ValueError, match="wrong_turns must be non-negative"):
+        turn_accuracy(-1)
+
+
+def test_turn_accuracy_accepts_zero_and_positive_counts():
+    assert turn_accuracy(0) == 0
+    assert turn_accuracy(3) == 3
