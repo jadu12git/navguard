@@ -1,5 +1,6 @@
 from src.metrics.eta_accuracy import eta_error_percentage
 from src.metrics.turn_accuracy import turn_accuracy
+from src.metrics.route_efficiency import route_efficiency
 
 def test_eta_accuracy():
     error = eta_error_percentage(100, 110)
@@ -51,3 +52,15 @@ def test_turn_accuracy_rejects_negative_counts():
 def test_turn_accuracy_accepts_zero_and_positive_counts():
     assert turn_accuracy(0) == 0
     assert turn_accuracy(3) == 3
+
+
+def test_route_efficiency_rejects_negative_distance():
+    import pytest
+
+    with pytest.raises(ValueError, match="distance_km must be non-negative"):
+        route_efficiency(-0.1)
+
+
+def test_route_efficiency_accepts_zero_and_positive_distance():
+    assert route_efficiency(0) == 0
+    assert route_efficiency(12.5) == 12.5
